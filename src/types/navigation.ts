@@ -6,3 +6,7 @@ export type AuthStackParamList = {
 }
 
 export type AuthScreenTypes = 'Onboarding' | 'CreateUsername' | 'RecoveryPhrase' | 'SignIn';
+
+export type AppStackParamList = {
+    Dashboard: undefined;
+}

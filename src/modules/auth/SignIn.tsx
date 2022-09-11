@@ -1,10 +1,17 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Image } from 'react-native';
 import Header from './components/Header';
 import { mainTheme } from '../../themes/mainTheme';
 import Button from '../common/Button';
+import useAppNavigation from '../navigation/hooks/useAppNavigation';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores/store';
 
 const SignIn = () => {
+    const { signInWithMnemonic } = useStore().userStore;
+
+    // const res = getPubPrivKeyFromMnemonic("goat kind receive brass left mind paper whisper problem stable rebuild pigeon grain soup casual hamster camp reduce venture raccoon stuff inch amount bracket");
+
     const [recoveryPhrase, setRecoveryPhrase] = useState<String>();
 
     return (
@@ -16,7 +23,7 @@ const SignIn = () => {
             />
             <Text style={styles.signInRecoveryText}>Sign in with Recovery Phrase</Text>
             <View style={styles.subTextContainer}>
-                <Text style={{color: '#4F5C6C'}}>This is a 12 word phrase you were given when you created your previous wallet.</Text>
+                <Text style={{color: '#4F5C6C'}}>This is a 24 gword phrase you were given when you created your previous wallet.</Text>
             </View>
             <TextInput 
                 style={styles.card}
@@ -27,13 +34,18 @@ const SignIn = () => {
                 numberOfLines={4}
             />
             <View style={{position: 'absolute', width: '100%', bottom: 45}}>
-                <Button buttonName={'Next'} onPress={() => {}} />
+                <Button 
+                    buttonName='Next' 
+                    onPress={() => {
+                        signInWithMnemonic(recoveryPhrase);
+                    }} 
+                />
             </View>
         </View>
     )
 }
 
-export default SignIn;
+export default observer(SignIn);
 
 const styles = StyleSheet.create({
     container: {
@@ -56,7 +68,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
     },
     card: {
-        backgroundColor: '#E9E9E9',
+        backgroundColor: mainTheme.MEDIUM_GREY_COLOR,
         marginTop: 22, 
         width: '90%',
         height: 93,
