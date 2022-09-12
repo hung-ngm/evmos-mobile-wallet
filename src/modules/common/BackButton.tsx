@@ -7,9 +7,10 @@ export type BackButtonProps = {
   name?: string;
   onPress: () => void;
   extraProps? : object;
+  color: string
 }
 
-const BackButton = ({ name, onPress, extraProps } : BackButtonProps) => {
+const BackButton = ({ name, onPress, extraProps, color } : BackButtonProps) => {
     return (
         <TouchableWithoutFeedback
             onPress={onPress}
@@ -24,7 +25,7 @@ const BackButton = ({ name, onPress, extraProps } : BackButtonProps) => {
                     color: mainTheme.SEA_GREEN,
                     fontSize: 18,
                 }}>{name}</Text>
-                <Icon name="left" size={25} color={mainTheme.SEA_GREEN} />
+                <Icon name="left" size={25} color={color} />
             </View>
         </TouchableWithoutFeedback>
     )

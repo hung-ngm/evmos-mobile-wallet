@@ -12,14 +12,17 @@ import { mainTheme } from '../../themes/mainTheme';
 import { StargateClient } from '@cosmjs/stargate';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores/store';
-import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
+import useAppNavigation from '../navigation/hooks/useAppNavigation'; 
 
 const Dashboard = () => {
     const { getLatestPrice } = useStore().priceStore;
     const [coinSelected, setCoinSelected] = useState<boolean>(true);
     const [evmosBalance, setEvmosBalance] = useState<Number>(0);
     const [usdBalance, setUsdBalance] = useState<Number>(0);
-    const rpcEndpoint = 'https://rpc-evmos-ia.notional.ventures:443	';
+    const rpcEndpoint = 'https://rpc-evmos-ia.notional.ventures:443';
+    const navigation = useAppNavigation();
+    
     
     const getBalance = async () => {
         try {
@@ -102,19 +105,28 @@ const Dashboard = () => {
             <Text style={styles.usdBalance}>{`$${usdBalance}`}</Text>
     
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.sendButton}>
+              <TouchableOpacity 
+                style={styles.sendButton}
+                onPress={() => navigation.navigate('Send')}
+            >
                 <View style={styles.sendButtonIcon}>
                     <MaterialCommunityIcons name="call-made" size={24} color={mainTheme.MEDIUM_SPRING_GREEN} />
                 </View>
                 <Text style={styles.buttonText}>Send</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.receiveButton}>
+              <TouchableOpacity 
+                style={styles.receiveButton}
+                onPress={() => navigation.navigate('Receive')}
+            >
                 <View style={styles.receiveButtonIcon}>
                     <Octicons name="download" size={24} color={mainTheme.MEDIUM_SPRING_GREEN} />
                 </View>
                 <Text style={styles.buttonText}>Receive</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.swapButton}>
+              <TouchableOpacity 
+                style={styles.swapButton}
+                onPress={() => navigation.navigate('Swap')}
+            >
                 <View style={styles.swapButtonIcon}>
                     <MaterialCommunityIcons name="swap-horizontal" size={24} color={mainTheme.MEDIUM_SPRING_GREEN} />
                 </View>

@@ -15,8 +15,10 @@ const RootTab = () => {
             initialRouteName="Dashboard"
             screenOptions={{
                 headerShown: false,
-                tabBarActiveTintColor: mainTheme.MEDIUM_SPRING_GREEN,
+                tabBarActiveTintColor: mainTheme.SEA_GREEN,
+                
             }}
+            
         >
             <Tab.Screen
                 name="Dashboard"
