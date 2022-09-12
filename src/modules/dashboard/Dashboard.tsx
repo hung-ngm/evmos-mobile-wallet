@@ -23,7 +23,6 @@ const Dashboard = () => {
     const rpcEndpoint = 'https://rpc-evmos-ia.notional.ventures:443';
     const navigation = useAppNavigation();
     
-    
     const getBalance = async () => {
         try {
             const client = await StargateClient.connect(rpcEndpoint);
@@ -33,7 +32,7 @@ const Dashboard = () => {
             setEvmosBalance(amount);
 
             const price = await getLatestPrice({ id: 'evmos' });
-            const usd = amount * price;
+            const usd = Number((amount * price).toFixed(2));
             console.log(usd);
             setUsdBalance(usd);
         } catch(err) {

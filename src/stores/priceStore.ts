@@ -15,9 +15,7 @@ class PriceStore {
 
         const latestPrice = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`);
         console.log(latestPrice.data);
-
         return latestPrice.data[coin.id]['usd'];
-        
     }
 }
 

@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         flex: 5.7,
     },
     sendText: {
-        color: mainTheme.WHITE_COLOR,
+        color: mainTheme.BLACK_COLOR,
         textAlign: 'center', 
         fontSize: 24, 
         fontWeight: '700', 

@@ -7,5 +7,6 @@ export const mainTheme = {
     LIGHT_GREY_COLOR: "#F7F8FA",
     PURPLE_COLOR: "#800080",
     MEDIUM_SPRING_GREEN: "#00FA9A",
-    SEA_GREEN: "#2E8B57"
+    SEA_GREEN: "#2E8B57",
+    DARK_GREEN: "#006400"
 }
