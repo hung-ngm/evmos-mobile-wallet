@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     View, 
     Text, 
@@ -8,16 +8,46 @@ import {
     SafeAreaView,
     FlatList 
 } from 'react-native';
+import { mainTheme } from '../../themes/mainTheme';
+import { StargateClient } from '@cosmjs/stargate';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores/store';
 
 const Dashboard = () => {
+    const { getLatestPrice } = useStore().priceStore;
     const [coinSelected, setCoinSelected] = useState<boolean>(true);
+    const [evmosBalance, setEvmosBalance] = useState<Number>();
+    const [usdBalance, setUsdBalance] = useState<Number>();
+    const rpcEndpoint = 'https://rpc-evmos-ia.notional.ventures:443	';
+    
+    const getBalance = async () => {
+        try {
+            const client = await StargateClient.connect(rpcEndpoint);
+            const balance = await client.getBalance('evmos1uquzlv7fgv3lrx2swz43vympd3t3qn33p9n8mr', 'aevmos');
+            const amount = Number(balance.amount)/1000000000000000000;
+            console.log(amount);
+            setEvmosBalance(amount);
+
+            const price = await getLatestPrice({ id: 'evmos' });
+            const usd = amount * price;
+            console.log(usd);
+            setUsdBalance(usd);
+        } catch(err) {
+            console.log(err);
+        } 
+    }
+
+    useEffect(() => {
+        getBalance();
+    }, [])
 
     const coinsFakeData = [
         {   
             id: 1,
             name: 'Evmos',
             logo: 'https://pbs.twimg.com/profile_images/1507525321322471425/ag3UJYHJ_400x400.png',
-            symbol: 'EVMOS'
+            symbol: 'EVMOS',
+            balance: evmosBalance
         }
     ];
 
@@ -39,8 +69,16 @@ const Dashboard = () => {
             <TouchableOpacity style={styles.coinsContainer} key={item.name}>
                 <Image source={{ uri: item.logo }} style={styles.coinsLogo}/>
                 <View style={styles.coinsDetailContainer}>
-                    <Text style={styles.coinsNameText}>{item.name}</Text>
-                    <Text style={styles.coinsSymbol}>{item.symbol}</Text>
+                    <View style={styles.coinsDetailRow}>
+                        <Text style={styles.coinsNameText}>{item.name}</Text>
+                        <Text style={styles.coinsToUsdText}>{`$ ${usdBalance}`}</Text>
+                    </View>
+                    <View style={styles.coinsDetailRow}>
+                        <Text style={styles.coinsSymbol}>{item.symbol}</Text>
+                        <Text style={styles.coinsAmountText}>{item.balance}</Text>
+                    </View>
+                    
+                    
                 </View>
             </TouchableOpacity>
         )
@@ -60,7 +98,7 @@ const Dashboard = () => {
         <View style={styles.container}>
           <SafeAreaView style={{marginTop: 20}}>
             <Text style={styles.userName}>@Hung</Text>
-            <Text style={styles.usdBalance}>US$0.00</Text>
+            <Text style={styles.usdBalance}>{`$${usdBalance}`}</Text>
     
             <View style={styles.buttonContainer}>
               <TouchableOpacity style={styles.sendButton} >
@@ -78,7 +116,7 @@ const Dashboard = () => {
                 style={[
                   styles.coinsButton, 
                   {
-                    borderBottomColor: coinSelected ? '#1652F0': 'gray',
+                    borderBottomColor: coinSelected ? mainTheme.SEA_GREEN : 'gray',
                     borderBottomWidth: coinSelected ? 3: 0.2 
                   }
                 ]} 
@@ -89,7 +127,7 @@ const Dashboard = () => {
                 style={[
                   styles.nftButton, 
                   {
-                    borderBottomColor: !coinSelected ? '#1652F0': 'gray',
+                    borderBottomColor: !coinSelected ? mainTheme.SEA_GREEN : 'gray',
                     borderBottomWidth: !coinSelected ? 3: 0.2 
                   } 
                 ]} 
@@ -132,17 +170,17 @@ const Dashboard = () => {
       );
 }
 
-export default Dashboard;
+export default observer(Dashboard);
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
       height: '50%',
-      backgroundColor: '#1652F0'
+      backgroundColor: mainTheme.MEDIUM_SPRING_GREEN
     },
     userName: {
       fontSize: 14, 
-      color: '#B5CBFF', 
+      color: mainTheme.BLACK_COLOR, 
       textAlign: 'center'
     },
     usdBalance: {
@@ -154,7 +192,7 @@ const styles = StyleSheet.create({
       marginTop: 10
     },
     buttonContainer: {
-      backgroundColor: '#0A49EE', 
+      backgroundColor: mainTheme.SEA_GREEN, 
       width: '75%', 
       height: 47, 
       borderRadius: 15, 
@@ -230,15 +268,31 @@ const styles = StyleSheet.create({
       justifyContent: 'center', 
       marginLeft: 13
     },
+    coinsDetailRow: {
+        flexDirection: 'row',
+    },
+    coinsToUsdText: {
+        marginLeft: 160,
+        fontFamily: 'Helvetica Neue', 
+        fontWeight: '700'
+    },
+    coinsAmountText: {
+        fontFamily: 'Helvetica Neue', 
+        fontWeight: '700', 
+        fontSize: 10, 
+        color: '#AAAAAA',
+    },
+
     coinsNameText: {
       fontFamily: 'Helvetica Neue', 
-      fontWeight: '700'
+      fontWeight: '700',
     },
     coinsSymbol: {
       fontFamily: 'Helvetica Neue', 
       fontWeight: '700', 
       fontSize: 10, 
-      color: '#AAAAAA'
+      color: '#AAAAAA',
+      width: '85%'
     },
     nftContainer: {
       width: 150, 

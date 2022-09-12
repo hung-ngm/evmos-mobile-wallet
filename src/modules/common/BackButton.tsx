@@ -21,10 +21,10 @@ const BackButton = ({ name, onPress, extraProps } : BackButtonProps) => {
                 flexDirection: 'row',
             }}>
                 <Text style={{
-                    color: mainTheme.BLUE_COLOR,
+                    color: mainTheme.SEA_GREEN,
                     fontSize: 18,
                 }}>{name}</Text>
-                <Icon name="left" size={25} color={mainTheme.BLUE_COLOR} />
+                <Icon name="left" size={25} color={mainTheme.SEA_GREEN} />
             </View>
         </TouchableWithoutFeedback>
     )

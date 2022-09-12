@@ -38,7 +38,7 @@ const CreateUsername = () => {
                 <View style={styles.formContainer}>
                     <TouchableOpacity 
                         disabled={username === "" ? true : false} 
-                        style={[styles.button, {backgroundColor: username === "" ? mainTheme.DARK_GREY_COLOR : mainTheme.BLUE_COLOR}]} 
+                        style={[styles.button, {backgroundColor: username === "" ? mainTheme.DARK_GREY_COLOR : mainTheme.SEA_GREEN}]} 
                         onPress={() => {}}>
                         <Text style={styles.buttonText}>Next</Text>
                     </TouchableOpacity>

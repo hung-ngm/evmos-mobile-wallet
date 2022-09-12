@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         marginTop: '50%'
     },
     logoText: {
-        color: mainTheme.BLUE_COLOR, 
+        color: mainTheme.MEDIUM_SPRING_GREEN, 
         fontSize: 40, 
         marginRight: 10,  
         fontWeight: 'bold'
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         fontSize: 18, 
         fontFamily: 'Helvetica Neue', 
         textAlign: 'center', 
-        color: mainTheme.BLUE_COLOR
+        color: mainTheme.SEA_GREEN
     }
 })
 

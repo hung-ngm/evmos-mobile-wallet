@@ -23,7 +23,7 @@ export default Button;
 const styles = StyleSheet.create({
   button: {
     alignSelf: 'center',
-    backgroundColor: mainTheme.BLUE_COLOR, 
+    backgroundColor: mainTheme.MEDIUM_SPRING_GREEN, 
     width: '90%', 
     height: 58, 
     borderRadius: 15, 
