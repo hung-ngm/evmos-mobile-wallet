@@ -7,7 +7,6 @@ const Send = () => {
     return (
         <View style={styles.container}>
             <Header backTab="Dashboard" />
-            <Text>Send Tab</Text>
         </View>
     )
 }

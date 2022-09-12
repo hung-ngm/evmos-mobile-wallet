@@ -13,14 +13,20 @@ const Header = ({ backTab }: HeaderProps) => {
     const navigation = useRootNavigation();
     return (
         <View style={styles.container}>
-            <BackButton 
-                extraProps={{
-                    paddingLeft: 35,
-                    marginLeft: 10,
-                }}
-                onPress={() => navigation.navigate(backTab) } 
-                color={mainTheme.WHITE_COLOR}
-            />
+            <View style={styles.backButtonContainer}>
+                <BackButton 
+                    extraProps={{
+                        paddingLeft: 35,
+                        marginLeft: 10,
+                    }}
+                    onPress={() => navigation.navigate(backTab) } 
+                    color={mainTheme.WHITE_COLOR}
+                />
+            </View>
+            
+            <View style={styles.sendTextContainer}>
+                <Text style={styles.sendText}>Send</Text>
+            </View>
         </View>
     )
 
@@ -32,8 +38,26 @@ const styles = StyleSheet.create({
     container: {
       flexDirection: "row",
       alignItems: "center",
-      paddingVertical: 30,
+      paddingVertical: 40,
       paddingHorizontal: 20,
       borderRadius: 12,
+    },
+    backButtonContainer: {
+        flexDirection: "row",
+        flex: 0.3,
+    },
+    sendTextContainer: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        flex: 5.7,
+    },
+    sendText: {
+        color: mainTheme.WHITE_COLOR,
+        textAlign: 'center', 
+        fontSize: 24, 
+        fontWeight: '700', 
+        fontFamily: 'Helvetica Neue',
+        marginLeft: -20,
     }
 });
