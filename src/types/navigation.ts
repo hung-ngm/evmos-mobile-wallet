@@ -8,5 +8,11 @@ export type AuthStackParamList = {
 export type AuthScreenTypes = 'Onboarding' | 'CreateUsername' | 'RecoveryPhrase' | 'SignIn';
 
 export type AppStackParamList = {
+    Root: undefined;
+}
+
+export type RootTabParamList = {
     Dashboard: undefined;
+    Explore: undefined;
+    Settings: undefined;
 }

@@ -12,12 +12,13 @@ import { mainTheme } from '../../themes/mainTheme';
 import { StargateClient } from '@cosmjs/stargate';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores/store';
+import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons'; 
 
 const Dashboard = () => {
     const { getLatestPrice } = useStore().priceStore;
     const [coinSelected, setCoinSelected] = useState<boolean>(true);
-    const [evmosBalance, setEvmosBalance] = useState<Number>();
-    const [usdBalance, setUsdBalance] = useState<Number>();
+    const [evmosBalance, setEvmosBalance] = useState<Number>(0);
+    const [usdBalance, setUsdBalance] = useState<Number>(0);
     const rpcEndpoint = 'https://rpc-evmos-ia.notional.ventures:443	';
     
     const getBalance = async () => {
@@ -101,12 +102,25 @@ const Dashboard = () => {
             <Text style={styles.usdBalance}>{`$${usdBalance}`}</Text>
     
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.sendButton} >
+              <TouchableOpacity style={styles.sendButton}>
+                <View style={styles.sendButtonIcon}>
+                    <MaterialCommunityIcons name="call-made" size={24} color={mainTheme.MEDIUM_SPRING_GREEN} />
+                </View>
                 <Text style={styles.buttonText}>Send</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.receiveButton}>
+                <View style={styles.receiveButtonIcon}>
+                    <Octicons name="download" size={24} color={mainTheme.MEDIUM_SPRING_GREEN} />
+                </View>
                 <Text style={styles.buttonText}>Receive</Text>
               </TouchableOpacity>
+              <TouchableOpacity style={styles.swapButton}>
+                <View style={styles.swapButtonIcon}>
+                    <MaterialCommunityIcons name="swap-horizontal" size={24} color={mainTheme.MEDIUM_SPRING_GREEN} />
+                </View>
+                <Text style={styles.buttonText}>Swap</Text>
+              </TouchableOpacity>
+              
             </View>
           </SafeAreaView>
     
@@ -200,15 +214,34 @@ const styles = StyleSheet.create({
       marginTop: 20, 
       flexDirection: 'row'
     },
+    sendButtonIcon: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingLeft: 10,
+    },
     sendButton: {
-      width: '50%', 
+      width: '33.3%', 
       justifyContent: 'center', 
       borderRightColor: '#fff', 
       borderRightWidth: 1
     },
+    receiveButtonIcon: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     receiveButton: {
-      width: '50%', 
-      justifyContent: 'center'
+      width: '33.3%', 
+      justifyContent: 'center',
+      borderRightColor: '#fff', 
+      borderRightWidth: 1
+    },
+    swapButton: {
+        width: '33.3%', 
+        justifyContent: 'center'
+    },
+    swapButtonIcon: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     buttonText: {
       fontSize: 14, 
