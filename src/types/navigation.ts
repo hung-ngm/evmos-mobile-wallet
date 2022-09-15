@@ -20,6 +20,7 @@ export type RootTabParamList = {
     Dashboard: undefined;
     Explore: undefined;
     Settings: undefined;
+    Tools: undefined;
 }
 
 export type RootScreenTypes = 'Dashboard' | 'Explore' | 'Settings';

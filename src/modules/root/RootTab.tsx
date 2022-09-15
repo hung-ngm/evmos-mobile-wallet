@@ -4,6 +4,7 @@ import { RootTabParamList } from '../../types/navigation';
 import Dashboard from '../dashboard/Dashboard';
 import Explore from '../explore/Explore';
 import Settings from '../settings/Settings';
+import Tools from '../tools/Tools';
 import { mainTheme } from '../../themes/mainTheme';
 import { FontAwesome5, Entypo, Ionicons } from '@expo/vector-icons'
 
@@ -37,6 +38,16 @@ const RootTab = () => {
                     tabBarLabel: 'Explore',
                     tabBarIcon: ({ color, size }) => (
                         <Entypo name="globe" size={size} color={color} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Tools"
+                component={Tools}
+                options={{
+                    tabBarLabel: 'Tools',
+                    tabBarIcon: ({ color, size }) => (
+                        <Entypo name="tools" size={size} color={color} />
                     ),
                 }}
             />
