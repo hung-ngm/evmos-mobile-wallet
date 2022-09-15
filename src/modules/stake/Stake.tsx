@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { 
     Text, 
     View, 
@@ -9,9 +9,16 @@ import {
 import { mainTheme } from '../../themes/mainTheme';
 import Header from './components/Header';
 import ValidatorPreview from './components/ValidatorPreview';
-import { Validator } from '../../types/validator';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores/store';
 
 const Stake = () => {
+    const { fetchValidators, validators } = useStore().validatorStore;
+    useEffect(() => {
+        fetchValidators();
+    }, []);
+
+
     const validatorsFakeData = [
         {
             id: '1',
@@ -59,7 +66,7 @@ const Stake = () => {
             <View style={styles.validatorsContainer}>
                 <FlatList
                     key={'validators'}
-                    data={validatorsFakeData}
+                    data={validators}
                     renderItem={renderValidator}
                     keyExtractor={item => item.id}
                     style={{ marginTop: 10 }}
@@ -72,7 +79,7 @@ const Stake = () => {
     )
 }
 
-export default Stake;
+export default observer(Stake);
 
 const styles = StyleSheet.create({
     container: {

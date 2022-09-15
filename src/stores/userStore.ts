@@ -2,17 +2,12 @@ import { User } from '../types/user';
 import { makeAutoObservable, runInAction, reaction } from 'mobx';
 import { ethers } from 'ethers';
 import { generateEndpointAccount } from '@tharsis/provider';
-import { Chain } from '../types/chain';
-import { Fee, SendParams } from '../types/params';
-import { Sender } from '../types/sender';
 import { DirectSecp256k1HdWallet, OfflineDirectSigner } from "@cosmjs-rn/proto-signing";
-import { SigningStargateClient } from "@cosmjs-rn/stargate"
 import { createMessageSend } from '@evmos/transactions';
 import { 
     getSender, 
     signTransaction,
     broadcast,
-    MAINNET_FEE,
     MAINNET_CHAIN,
 } from '@hanchon/evmos-ts-wallet';
 import { Wallet } from "@ethersproject/wallet"
@@ -106,25 +101,6 @@ class UserStore {
             console.log('sendToRecipient err', err);
         }
     }
-
-    // sendToRecipient = async (user: User, recipientAddress: string, amount: any, fee: any, memo: string) => {
-    //     try {
-    //         const signer: OfflineDirectSigner = await this.getSignerFromMnemonic(user);
-    //         const rpcEndpoint = 'https://tendermint.bd.evmos.org:26657';
-    //         const signingClient = await SigningStargateClient.connectWithSigner(rpcEndpoint, signer);
-            
-    //         const result = await signingClient.sendTokens(
-    //             user.address,
-    //             recipientAddress,
-    //             amount,
-    //             fee
-    //         );
-    //         console.log(result);
-    //         return result;
-    //     } catch (err) {
-    //         console.log('err here', err);
-    //     }
-    // }
 
     getSignerFromMnemonic = async (user: User): Promise<OfflineDirectSigner> => {
         const signer = DirectSecp256k1HdWallet.fromMnemonic(user.mnemonic, {

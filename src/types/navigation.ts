@@ -13,9 +13,10 @@ export type AppStackParamList = {
     Swap: undefined;
     Stake: undefined;
     Vote: undefined;
+    ValidatorDetails: undefined;
 }
 
-export type AppScreenTypes = 'Root' | 'Send' | 'Stake' | 'Swap' | 'Vote';
+export type AppScreenTypes = 'Root' | 'Send' | 'Stake' | 'Swap' | 'Vote' | 'ValidatorDetails';
 
 export type RootTabParamList = {
     Dashboard: undefined;

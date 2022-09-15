@@ -26,7 +26,9 @@ const ValidatorPreview = ({ validator, onPress }: ValidatorPreviewProps) => {
             <View style={styles.validatorIdContainer}>
                 <Text style={styles.validatorId}>{validator.id}</Text>
             </View>
-            <Image source={{ uri: logo }} style={styles.validatorLogo} />
+            <Image 
+                source={{ uri: logo }} 
+                style={styles.validatorLogo} />
 
             <View style={styles.validatorInfoContainer}>
                 <View style={styles.validatorNameContainer}>
@@ -35,8 +37,6 @@ const ValidatorPreview = ({ validator, onPress }: ValidatorPreviewProps) => {
                 <View style={styles.validatorVotingPowerContainer}>
                     <Text style={styles.validatorVotingPowerText}>{votingPower.toLocaleString()}</Text>
                 </View>
-                
-                
             </View>
         </TouchableOpacity>
     )
