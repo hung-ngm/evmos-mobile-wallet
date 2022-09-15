@@ -8,5 +8,8 @@ export const mainTheme = {
     PURPLE_COLOR: "#800080",
     MEDIUM_SPRING_GREEN: "#00FA9A",
     SEA_GREEN: "#2E8B57",
-    DARK_GREEN: "#006400"
+    DARK_GREEN: "#006400",
+    ORANGE_COLOR: "#FFA500",
+    RED_COLOR: "#FF0000",
+    NORMAL_GREEN: "#008000"
 }

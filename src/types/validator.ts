@@ -6,4 +6,8 @@ export type Validator = {
     votingPower: number;
     commissionPercentage: number;
     APRPercentage: number; 
+    jailed: boolean;
+    activeSet: boolean;
+    description: string;
+    website: string;
 }

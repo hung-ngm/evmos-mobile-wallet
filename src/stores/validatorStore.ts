@@ -26,7 +26,11 @@ class ValidatorStore {
                                                     logo: `https://github.com/cosmostation/cosmostation_token_resource/blob/master/moniker/evmos/${validator.operator_address}.png?raw=true`,
                                                     votingPower: Math.round(Number(validator.tokens)/1000000000000000000),
                                                     commissionPercentage: Number(validator.commission.commission_rates.rate),
-                                                    APRPercentage: 0
+                                                    APRPercentage: 0,
+                                                    jailed: validator.jailed,
+                                                    activeSet: (index + 1) <= 150 ? true : false,
+                                                    description: validator.description.details,
+                                                    website: validator.description.website
                                                 }
                                             });
         runInAction(() => {
@@ -40,8 +44,13 @@ class ValidatorStore {
         this.currentValidator = validator;
     }
 
-    selectValidator = (id: string) => {
+    selectValidator = (id: string): boolean => {
+        if (!this.validatorsMap.has(id)) {
+            this.currentValidator = null;
+            return false;
+        }
         this.currentValidator = this.validatorsMap.get(id);
+        return true;
     }
 }
 

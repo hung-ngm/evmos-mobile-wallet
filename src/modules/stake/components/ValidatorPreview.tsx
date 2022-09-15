@@ -15,7 +15,7 @@ interface ValidatorPreviewProps {
 }
 
 const ValidatorPreview = ({ validator, onPress }: ValidatorPreviewProps) => {
-    const { id, name, logo, commissionPercentage, votingPower, APRPercentage } = validator;
+    const { id, name, logo, votingPower, jailed, activeSet } = validator;
 
     return (
         <TouchableOpacity
@@ -28,14 +28,29 @@ const ValidatorPreview = ({ validator, onPress }: ValidatorPreviewProps) => {
             </View>
             <Image 
                 source={{ uri: logo }} 
-                style={styles.validatorLogo} />
-
+                style={styles.validatorLogo} 
+            />
             <View style={styles.validatorInfoContainer}>
                 <View style={styles.validatorNameContainer}>
-                    <Text style={styles.validatorNameText}>{name}</Text>
+                    <Text 
+                        style={
+                            jailed ? 
+                            styles.validatorNameJailedText : 
+                            (activeSet ? 
+                                styles.validatorNameActiveText : 
+                                styles.validatorNameInactiveText
+                            )}>
+                            {name}
+                        </Text>
                 </View>
                 <View style={styles.validatorVotingPowerContainer}>
-                    <Text style={styles.validatorVotingPowerText}>{votingPower.toLocaleString()}</Text>
+                    <Text 
+                        style={jailed ? styles.validatorVotingPowerTextJailed : (
+                            activeSet ? styles.validatorVotingPowerTextActive : styles.validatorVotingPowerTextInactive
+                        )}
+                    >
+                            {votingPower.toLocaleString()}
+                    </Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -78,15 +93,37 @@ const styles = StyleSheet.create({
         width: '65%',
         textAlign: 'left',
     },
-    validatorNameText: {
+    validatorNameActiveText: {
         fontFamily: 'Helvetica Neue', 
-        fontWeight: '700'
+        fontWeight: '700',
+        color: mainTheme.NORMAL_GREEN
+    },
+    validatorNameInactiveText: {
+        fontFamily: 'Helvetica Neue', 
+        fontWeight: '700',
+        color: mainTheme.ORANGE_COLOR
+    },
+    validatorNameJailedText: {
+        fontFamily: 'Helvetica Neue', 
+        fontWeight: '700',
+        color: mainTheme.RED_COLOR
     },
     validatorVotingPowerContainer: {
 
     },
-    validatorVotingPowerText: {
+    validatorVotingPowerTextActive: {
         fontFamily: 'Helvetica Neue', 
-        fontWeight: '700'
+        fontWeight: '700',
+        color: mainTheme.NORMAL_GREEN,
+    },
+    validatorVotingPowerTextInactive: {
+        fontFamily: 'Helvetica Neue', 
+        fontWeight: '700',
+        color: mainTheme.ORANGE_COLOR,
+    },
+    validatorVotingPowerTextJailed: {
+        fontFamily: 'Helvetica Neue', 
+        fontWeight: '700',
+        color: mainTheme.RED_COLOR,
     }
 })

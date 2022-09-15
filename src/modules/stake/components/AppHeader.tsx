@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import BackButton from '../../common/BackButton';
-import useRootNavigation from '../../navigation/hooks/useRootNavigation';
-import { RootScreenTypes } from '../../../types/navigation';
+import useAppNavigation from '../../navigation/hooks/useAppNavigation';
+import { AppScreenTypes } from '../../../types/navigation';
 import { mainTheme } from '../../../themes/mainTheme';
 
-export type HeaderProps = {
-    backTab: RootScreenTypes;
+export type AppHeaderProps = {
+    backTab: AppScreenTypes;
 }
 
-const Header = ({ backTab }: HeaderProps) => {
-    const navigation = useRootNavigation();
+const AppHeader = ({ backTab }: AppHeaderProps) => {
+    const navigation = useAppNavigation();
     return (
         <View style={styles.container}>
             <View style={styles.backButtonContainer}>
@@ -25,14 +25,14 @@ const Header = ({ backTab }: HeaderProps) => {
             </View>
             
             <View style={styles.stakeTextContainer}>
-                <Text style={styles.stakeText}>All Active Validators</Text>
+                <Text style={styles.stakeText}>Validator Details</Text>
             </View>
         </View>
     )
 
 }
 
-export default Header;
+export default AppHeader;
 
 const styles = StyleSheet.create({
     container: {

@@ -6,6 +6,7 @@ import Send from '../../send/Send';
 import Stake from '../../stake/Stake';
 import Vote from '../../vote/Vote';
 import Swap from '../../swap/Swap';
+import ValidatorDetails from '../../stake/components/ValidatorDetails';
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -41,6 +42,12 @@ const AppNavigator = () => {
                     headerShown: false
                 }}
             />
+            <Stack.Screen name="ValidatorDetails" component={ValidatorDetails}
+                options={{
+                    headerShown: false
+                }}
+            />
+
         </Stack.Navigator>
     )
 }
