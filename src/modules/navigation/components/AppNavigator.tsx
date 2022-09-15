@@ -7,6 +7,7 @@ import Stake from '../../stake/Stake';
 import Vote from '../../vote/Vote';
 import Swap from '../../swap/Swap';
 import ValidatorDetails from '../../stake/components/ValidatorDetails';
+import StakeDetails from '../../stake/components/StakeDetails';
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -43,6 +44,11 @@ const AppNavigator = () => {
                 }}
             />
             <Stack.Screen name="ValidatorDetails" component={ValidatorDetails}
+                options={{
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen name="StakeDetails" component={StakeDetails}
                 options={{
                     headerShown: false
                 }}

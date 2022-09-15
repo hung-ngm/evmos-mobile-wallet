@@ -14,6 +14,7 @@ import {
 import AppHeader from './AppHeader';
 import { mainTheme } from '../../../themes/mainTheme';
 import { useStore } from '../../../stores/store';
+import useAppNavigation from '../../navigation/hooks/useAppNavigation';
 
 const ValidatorDetails = () => {
     const { currentValidator } = useStore().validatorStore;
@@ -29,8 +30,10 @@ const ValidatorDetails = () => {
         description
     } = currentValidator;
 
-    const handleStake = () => {
+    const navigation = useAppNavigation();
 
+    const handleStakeButtonPressed = () => {
+        navigation.navigate('StakeDetails');
     }
 
     const OpenExternalURLButton = ({ url, children }) => {
@@ -50,7 +53,7 @@ const ValidatorDetails = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <AppHeader backTab="Stake" />
+            <AppHeader backTab="Stake" title="Validator Details" />
             <ScrollView style={styles.validatorInfoContainer}>
                 <View style={styles.validatorNameContainer}>
                     <Image 
@@ -117,7 +120,7 @@ const ValidatorDetails = () => {
                 <View style={styles.stakeButtonContainer}>
                     <TouchableOpacity
                         style={styles.stakeButton} 
-                        onPress={() => { handleStake() }}
+                        onPress={() => { handleStakeButtonPressed() }}
                     > 
                         <Text style={styles.stakeText}>Stake</Text>
                     </TouchableOpacity>

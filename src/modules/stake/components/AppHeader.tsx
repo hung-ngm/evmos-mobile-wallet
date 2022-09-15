@@ -7,9 +7,10 @@ import { mainTheme } from '../../../themes/mainTheme';
 
 export type AppHeaderProps = {
     backTab: AppScreenTypes;
+    title: string;
 }
 
-const AppHeader = ({ backTab }: AppHeaderProps) => {
+const AppHeader = ({ backTab, title }: AppHeaderProps) => {
     const navigation = useAppNavigation();
     return (
         <View style={styles.container}>
@@ -25,7 +26,7 @@ const AppHeader = ({ backTab }: AppHeaderProps) => {
             </View>
             
             <View style={styles.stakeTextContainer}>
-                <Text style={styles.stakeText}>Validator Details</Text>
+                <Text style={styles.stakeText}>{title}</Text>
             </View>
         </View>
     )
