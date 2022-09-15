@@ -7,7 +7,6 @@ import { useStore } from '../../stores/store';
 
 const Navigation = () => {
     const { user } = useStore().userStore;
-    console.log(user);
 
     let Navigator: JSX.Element = <></>;
 

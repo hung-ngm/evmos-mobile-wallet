@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     Text, 
     View, 
@@ -10,12 +10,63 @@ import {
 } from 'react-native';
 import { mainTheme } from '../../themes/mainTheme';
 import Header from './components/Header';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores/store';
 
 const Send = () => {
-    const [recipient, setRecipient] = useState<String>('');
-    const [amount, setAmount] = useState<Number>(0);
+    const [recipient, setRecipient] = useState<string>('');
+    const [amount, setAmount] = useState<string>();
     const [token, setToken] = useState<String>('');
-    const [memo, setMemo] = useState<String>('');
+    const [memo, setMemo] = useState<string>('');
+    const [pubkey, setPubkey] = useState<string>();
+    const [sequence, setSequence] = useState<Number>();
+    const [accountNumber, setAccountNumber] = useState<Number>();
+    const { user, getAccountDetails, sendToRecipient, getMessageSend } = useStore().userStore;
+
+    const getAccountInformation = async () => {
+        const data = await getAccountDetails(user);
+        const pubkey = data['account']['base_account']['pub_key']['key'];
+        const accountNumber = Number(data['account']['base_account']['account_number']);
+        const sequence = Number(data['account']['base_account']['sequence']);
+        setPubkey(pubkey);
+        setAccountNumber(accountNumber);
+        setSequence(sequence);
+    }
+
+    useEffect(() => {
+        getAccountInformation();
+    }, []);
+
+    const handleSend = async () => {
+        try {
+            const chain = {
+                chainId: 9000,
+                cosmosChainId: 'evmos_9000-1',
+            }
+            const sender = {
+                accountAddress: user.address,
+                sequence: sequence,
+                accountNumber: accountNumber,
+                pubkey: pubkey
+            }
+            const fee = {
+                amount: [{ denom: 'aevmos', amount: '500' }],
+                gas: '200000',
+            }
+    
+            const amountParams = [
+                {
+                    denom: "aevmos",
+                    amount: amount
+                }
+            ]
+            await sendToRecipient(user, recipient, amount);
+        } catch (err) {
+            console.log('err here', err);
+        }
+        
+    }
+    
 
     return (
         <SafeAreaView style={styles.container}>
@@ -38,7 +89,6 @@ const Send = () => {
                             <TextInput
                                 placeholder='EVMOS'
                                 style={styles.inputStyle}
-                                onChangeText={(e) => setRecipient(e)}
                             />
                         </View>
                     </View>
@@ -48,7 +98,7 @@ const Send = () => {
                         <View style={styles.inputContainer}>
                             <TextInput
                                 style={styles.inputStyle}
-                                onChangeText={(e) => setAmount(Number(e))}
+                                onChangeText={(e) => setAmount(e)}
                             />
                         </View>
                     </View>
@@ -66,7 +116,7 @@ const Send = () => {
                     <View style={styles.sendButtonContainer}>
                         <TouchableOpacity
                             style={styles.sendButton} 
-                            onPress={() => {}}
+                            onPress={() => { handleSend() }}
                         > 
                             <Text style={styles.sendText}>Send</Text>
                         </TouchableOpacity>
@@ -80,7 +130,7 @@ const Send = () => {
     )
 }
 
-export default Send;
+export default observer(Send);
 
 const styles = StyleSheet.create({
     container: {

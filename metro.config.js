@@ -10,5 +10,6 @@ module.exports = {
     //added this
     resolver: {
       sourceExts: ['jsx', 'js', 'ts', 'tsx', 'cjs'],
+      stream: require.resolve('stream-browserify'),
     },
 };

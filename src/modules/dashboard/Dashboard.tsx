@@ -9,7 +9,7 @@ import {
     FlatList 
 } from 'react-native';
 import { mainTheme } from '../../themes/mainTheme';
-import { StargateClient } from '@cosmjs/stargate';
+import { StargateClient } from '@cosmjs-rn/stargate';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores/store';
 import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
@@ -20,7 +20,7 @@ const Dashboard = () => {
     const [coinSelected, setCoinSelected] = useState<boolean>(true);
     const [evmosBalance, setEvmosBalance] = useState<Number>(0);
     const [usdBalance, setUsdBalance] = useState<Number>(0);
-    const rpcEndpoint = 'https://rpc-evmos-ia.notional.ventures:443';
+    const rpcEndpoint = 'https://tendermint.bd.evmos.org:26657';
     const navigation = useAppNavigation();
     
     const getBalance = async () => {
