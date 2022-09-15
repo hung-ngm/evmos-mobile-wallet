@@ -3,9 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../../../types/navigation';
 import RootTab from '../../root/RootTab';
 import Send from '../../send/Send';
-import Receive from '../../receive/Receive';
+import Stake from '../../stake/Stake';
+import Vote from '../../vote/Vote';
 import Swap from '../../swap/Swap';
-
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -26,7 +26,12 @@ const AppNavigator = () => {
                     headerShown: false
                 }}
             />
-            <Stack.Screen name="Receive" component={Receive}
+            <Stack.Screen name="Stake" component={Stake}
+                options={{ 
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen name="Vote" component={Vote}
                 options={{ 
                     headerShown: false
                 }}

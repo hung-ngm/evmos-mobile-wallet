@@ -1,18 +1,16 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { mainTheme } from '../../themes/mainTheme';
-import Header from './components/Header';
+import { mainTheme } from '../../../themes/mainTheme';
 
-const Receive = () => {
+const ValidatorDetails = () => {
     return (
         <View style={styles.container}>
-            <Header backTab="Dashboard" />
-            <Text>Receive Tab</Text>
+            <Text>Validator Details</Text>
         </View>
     )
 }
 
-export default Receive;
+export default ValidatorDetails;
 
 const styles = StyleSheet.create({
     container: {

@@ -10,11 +10,12 @@ export type AuthScreenTypes = 'Onboarding' | 'CreateUsername' | 'RecoveryPhrase'
 export type AppStackParamList = {
     Root: undefined;
     Send: undefined;
-    Receive: undefined;
     Swap: undefined;
+    Stake: undefined;
+    Vote: undefined;
 }
 
-export type AppScreenTypes = 'Root' | 'Send' | 'Receive' | 'Swap';
+export type AppScreenTypes = 'Root' | 'Send' | 'Stake' | 'Swap' | 'Vote';
 
 export type RootTabParamList = {
     Dashboard: undefined;

@@ -12,7 +12,7 @@ import { mainTheme } from '../../themes/mainTheme';
 import { StargateClient } from '@cosmjs-rn/stargate';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores/store';
-import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
+import { FontAwesome5, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 import useAppNavigation from '../navigation/hooks/useAppNavigation'; 
 
 const Dashboard = () => {
@@ -114,14 +114,25 @@ const Dashboard = () => {
                 <Text style={styles.buttonText}>Send</Text>
               </TouchableOpacity>
               <TouchableOpacity 
-                style={styles.receiveButton}
-                onPress={() => navigation.navigate('Receive')}
+                style={styles.stakeButton}
+                onPress={() => navigation.navigate('Stake')}
             >
-                <View style={styles.receiveButtonIcon}>
-                    <Octicons name="download" size={24} color={mainTheme.MEDIUM_SPRING_GREEN} />
+                <View style={styles.stakeButtonIcon}>
+                    <FontAwesome5 name="user-shield" size={24} color={mainTheme.MEDIUM_SPRING_GREEN} />
                 </View>
-                <Text style={styles.buttonText}>Receive</Text>
+                <Text style={styles.buttonText}>Stake</Text>
               </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.voteButton}
+                onPress={() => navigation.navigate('Vote')}
+              >
+                <View style={styles.voteButtonIcon}>
+                    <FontAwesome5 name="vote-yea" size={24} color={mainTheme.MEDIUM_SPRING_GREEN} />
+                </View>
+                <Text style={styles.buttonText}>Vote</Text>
+              </TouchableOpacity>
+
               <TouchableOpacity 
                 style={styles.swapButton}
                 onPress={() => navigation.navigate('Swap')}
@@ -231,23 +242,33 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
     },
     sendButton: {
-      width: '33.3%', 
+      width: '25%', 
       justifyContent: 'center', 
       borderRightColor: '#fff', 
       borderRightWidth: 1
     },
-    receiveButtonIcon: {
-        justifyContent: 'center',
-        alignItems: 'center',
+    stakeButtonIcon: {
+      justifyContent: 'center',
+      alignItems: 'center',
     },
-    receiveButton: {
-      width: '33.3%', 
+    stakeButton: {
+      width: '25%', 
       justifyContent: 'center',
       borderRightColor: '#fff', 
       borderRightWidth: 1
     },
+    voteButton: {
+      width: '25%', 
+      justifyContent: 'center',
+      borderRightColor: '#fff', 
+      borderRightWidth: 1
+    },
+    voteButtonIcon: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     swapButton: {
-        width: '33.3%', 
+        width: '25%', 
         justifyContent: 'center'
     },
     swapButtonIcon: {
@@ -295,7 +316,7 @@ const styles = StyleSheet.create({
       height: 51, 
     },
     tokenLabelText: {
-      color: 'white',
+      color: 'black',
       fontSize: 10, 
       fontWeight: '700', 
       fontFamily: 'Helvetica Neue'
@@ -336,7 +357,7 @@ const styles = StyleSheet.create({
       fontWeight: '700', 
       fontSize: 10, 
       color: '#AAAAAA',
-      width: '85%'
+      width: '70%'
     },
     nftContainer: {
       width: 150, 
