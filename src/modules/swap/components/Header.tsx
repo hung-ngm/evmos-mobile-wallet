@@ -21,6 +21,9 @@ const Header = ({ backTab }: HeaderProps) => {
                 onPress={() => navigation.navigate(backTab) } 
                 color={mainTheme.WHITE_COLOR}
             />
+            <View style={styles.swapTextContainer}>
+                <Text style={styles.swapText}>Swap</Text>
+            </View>
         </View>
     )
 
@@ -35,5 +38,19 @@ const styles = StyleSheet.create({
       paddingVertical: 30,
       paddingHorizontal: 20,
       borderRadius: 12,
+    },
+    swapTextContainer: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        flex: 5.7,
+    },
+    swapText: {
+        color: mainTheme.BLACK_COLOR,
+        textAlign: 'center', 
+        fontSize: 24, 
+        fontWeight: '700', 
+        fontFamily: 'Helvetica Neue',
+        marginLeft: -20,
     }
 });
