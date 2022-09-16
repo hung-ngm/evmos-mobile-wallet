@@ -9,7 +9,6 @@ import {
     FlatList 
 } from 'react-native';
 import { mainTheme } from '../../themes/mainTheme';
-import { StargateClient } from '@cosmjs-rn/stargate';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores/store';
 import { FontAwesome5, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
@@ -17,22 +16,16 @@ import useAppNavigation from '../navigation/hooks/useAppNavigation';
 
 const Dashboard = () => {
     const { getLatestPrice } = useStore().priceStore;
+    const { user, getUserEvmosBalance } = useStore().userStore;
     const [coinSelected, setCoinSelected] = useState<boolean>(true);
-    const [evmosBalance, setEvmosBalance] = useState<Number>(0);
     const [usdBalance, setUsdBalance] = useState<Number>(0);
-    const rpcEndpoint = 'https://tendermint.bd.evmos.org:26657';
     const navigation = useAppNavigation();
     
     const getBalance = async () => {
         try {
-            const client = await StargateClient.connect(rpcEndpoint);
-            const balance = await client.getBalance('evmos1uquzlv7fgv3lrx2swz43vympd3t3qn33p9n8mr', 'aevmos');
-            const amount = Number(balance.amount)/1000000000000000000;
-            console.log(amount);
-            setEvmosBalance(amount);
-
+            await getUserEvmosBalance(user);
             const price = await getLatestPrice({ id: 'evmos' });
-            const usd = Number((amount * price).toFixed(2));
+            const usd = Number((user.balance * price).toFixed(2));
             console.log(usd);
             setUsdBalance(usd);
         } catch(err) {
@@ -50,7 +43,7 @@ const Dashboard = () => {
             name: 'Evmos',
             logo: 'https://pbs.twimg.com/profile_images/1507525321322471425/ag3UJYHJ_400x400.png',
             symbol: 'EVMOS',
-            balance: evmosBalance
+            balance: Number(user.balance.toFixed(6))
         }
     ];
 
@@ -79,9 +72,7 @@ const Dashboard = () => {
                     <View style={styles.coinsDetailRow}>
                         <Text style={styles.coinsSymbol}>{item.symbol}</Text>
                         <Text style={styles.coinsAmountText}>{item.balance}</Text>
-                    </View>
-                    
-                    
+                    </View> 
                 </View>
             </TouchableOpacity>
         )
@@ -357,7 +348,7 @@ const styles = StyleSheet.create({
       fontWeight: '700', 
       fontSize: 10, 
       color: '#AAAAAA',
-      width: '70%'
+      width: '76%'
     },
     nftContainer: {
       width: 150, 

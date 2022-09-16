@@ -2,8 +2,9 @@ import { User } from '../types/user';
 import { makeAutoObservable, runInAction, reaction } from 'mobx';
 import { ethers } from 'ethers';
 import { generateEndpointAccount } from '@tharsis/provider';
+import { StargateClient, SigningStargateClient, GasPrice } from '@cosmjs-rn/stargate';
 import { DirectSecp256k1HdWallet, OfflineDirectSigner } from "@cosmjs-rn/proto-signing";
-import { createMessageSend } from '@evmos/transactions';
+import { createMessageSend, createTxMsgDelegate } from '@evmos/transactions';
 import { 
     getSender, 
     signTransaction,
@@ -11,6 +12,8 @@ import {
     MAINNET_CHAIN,
 } from '@hanchon/evmos-ts-wallet';
 import { Wallet } from "@ethersproject/wallet"
+import { Validator } from '../types/validator';
+import { apiOwnKeys } from 'mobx/dist/internal';
 
 class UserStore {
     user: User | null = null;
@@ -20,7 +23,8 @@ class UserStore {
         this.user = {
             address: "evmos1uquzlv7fgv3lrx2swz43vympd3t3qn33p9n8mr",
             publicKey: "",
-            mnemonic: "goat kind receive brass left mind paper whisper problem stable rebuild pigeon grain soup casual hamster camp reduce venture raccoon stuff inch amount bracket"
+            mnemonic: "goat kind receive brass left mind paper whisper problem stable rebuild pigeon grain soup casual hamster camp reduce venture raccoon stuff inch amount bracket",
+            balance: 0,
         }
         makeAutoObservable(this);
 
@@ -45,7 +49,8 @@ class UserStore {
             const unencryptedState = {
                 address: subNodeWallet.address,
                 publicKey: subNodeWallet.publicKey,
-                mnemonic: mnemonic
+                mnemonic: mnemonic,
+                balance: 0,
             }
             this.setUser(unencryptedState);
             return true;
@@ -96,6 +101,11 @@ class UserStore {
             const resKeplr = await signTransaction(wallet, txSend)
             const broadcastRes = await broadcast(resKeplr, "https://rest.bd.evmos.org:1317")
             console.log(broadcastRes);
+            if (broadcastRes.tx_response.code === 0) {
+                console.log('Success')
+            } else {
+                console.log('Failed')
+            }
             
         } catch (err) {
             console.log('sendToRecipient err', err);
@@ -107,6 +117,49 @@ class UserStore {
             prefix: 'evmos'
         })
         return signer;
+    }
+
+    getUserEvmosBalance = async (user: User) => {
+        const rpcEndpoint = 'https://tendermint.bd.evmos.org:26657';
+        const client = await StargateClient.connect(rpcEndpoint);
+        const balance = await client.getBalance(user.address, 'aevmos');
+        const amount = Number(balance.amount)/1000000000000000000;
+        runInAction(() => {
+            user.balance = amount;
+        })
+    }
+
+    stake = async (user: User, validator: Validator, amount: string) => {
+        try {
+            const wallet = Wallet.fromMnemonic(user.mnemonic);
+            const sender = await getSender(wallet, "https://rest.bd.evmos.org:1317");
+            const txDelegate = createTxMsgDelegate(
+                MAINNET_CHAIN,
+                sender,
+                {
+                    amount: '12000000000000000',
+                    denom: 'aevmos',
+                    gas: '600000',
+                },
+                '',
+                {
+                    validatorAddress: validator.operatorAddress,
+                    amount: amount,
+                    denom: 'aevmos'
+                }    
+            )
+            const resKeplr = await signTransaction(wallet, txDelegate)
+            const broadcastRes = await broadcast(resKeplr, "https://rest.bd.evmos.org:1317")
+            console.log(broadcastRes);
+            if (broadcastRes.tx_response.code === 0) {
+                console.log('Success')
+            } else {
+                console.log('Failed')
+            }
+            
+        } catch (err) {
+            console.log('err stake', err);
+        }  
     }
 }
 
