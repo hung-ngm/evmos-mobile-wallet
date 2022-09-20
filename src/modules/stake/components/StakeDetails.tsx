@@ -13,15 +13,22 @@ import { mainTheme } from '../../../themes/mainTheme';
 import AppHeader from './AppHeader';
 import { useStore } from '../../../stores/store';
 import { observer } from 'mobx-react-lite';
+import useAppNavigation from '../../navigation/hooks/useAppNavigation';
 
 const StakeDetails = () => {
     const [amount, setAmount] = useState<string>('');
     const [memo, setMemo] = useState<string>('');
     const { user, stake } = useStore().userStore;
     const { currentValidator } = useStore().validatorStore;
+    const navigation = useAppNavigation();
 
     const handleStake = async () => {
-        await stake(user, currentValidator, amount);
+        const res = await stake(user, currentValidator, amount);
+        console.log('stakeRes', res);
+        if (res) {
+            navigation.navigate('TransactionSuccess');
+        }
+        
     }
 
     const evmosLogoURL = 'https://pbs.twimg.com/profile_images/1507525321322471425/ag3UJYHJ_400x400.png';

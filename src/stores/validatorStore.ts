@@ -2,7 +2,7 @@ import { Validator } from '../types/validator';
 import { makeAutoObservable, runInAction } from 'mobx';
 
 class ValidatorStore {
-    currentValidator: Validator | null = null;
+    currentValidator: Validator | null = null ;
     validatorsMap = new Map<string, Validator>();
 
     constructor() {

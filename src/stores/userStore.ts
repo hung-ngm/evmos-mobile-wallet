@@ -13,17 +13,21 @@ import {
 } from '@hanchon/evmos-ts-wallet';
 import { Wallet } from "@ethersproject/wallet"
 import { Validator } from '../types/validator';
-import { apiOwnKeys } from 'mobx/dist/internal';
+import { MNEMONIC } from '@env';
+import { TxType } from '../types/params';
 
 class UserStore {
     user: User | null = null;
+    sendMintscan : string;
+    stakeMintscan: string;
+    lastTx: TxType | null = null;
 
     constructor() {
         // Test only
         this.user = {
             address: "evmos1uquzlv7fgv3lrx2swz43vympd3t3qn33p9n8mr",
             publicKey: "",
-            mnemonic: "goat kind receive brass left mind paper whisper problem stable rebuild pigeon grain soup casual hamster camp reduce venture raccoon stuff inch amount bracket",
+            mnemonic: MNEMONIC,
             balance: 0,
         }
         makeAutoObservable(this);
@@ -103,7 +107,13 @@ class UserStore {
             console.log(broadcastRes);
             if (broadcastRes.tx_response.code === 0) {
                 console.log('Success')
+                runInAction(() => {
+                    this.sendMintscan = `https://mintscan.io/evmos/txs/${broadcastRes.tx_response.txhash}`;
+                    this.lastTx = TxType.SEND;
+                })
+                return true;
             } else {
+                return false;
                 console.log('Failed')
             }
             
@@ -127,6 +137,10 @@ class UserStore {
         runInAction(() => {
             user.balance = amount;
         })
+    }
+
+    setLastTx = (tx: TxType) => {
+        this.lastTx = tx;
     }
 
     stake = async (user: User, validator: Validator, amount: string) => {
@@ -153,12 +167,19 @@ class UserStore {
             console.log(broadcastRes);
             if (broadcastRes.tx_response.code === 0) {
                 console.log('Success')
+                runInAction(() => {
+                    this.stakeMintscan = `https://mintscan.io/evmos/txs/${broadcastRes.tx_response.txhash}`;
+                    this.lastTx = TxType.STAKE;
+                })
+                return true;
             } else {
                 console.log('Failed')
+                return false;
             }
             
         } catch (err) {
             console.log('err stake', err);
+            return false;
         }  
     }
 }

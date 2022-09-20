@@ -9,3 +9,10 @@ export type Fee = {
     denom: string;
     gas: string;
 }
+
+export enum TxType {
+    SEND = 'send',
+    STAKE = 'stake',
+    SWAP = 'swap',
+}
+

@@ -12,6 +12,7 @@ import { mainTheme } from '../../themes/mainTheme';
 import Header from './components/Header';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores/store';
+import useAppNavigation from '../navigation/hooks/useAppNavigation';
 
 const Send = () => {
     const [recipient, setRecipient] = useState<string>('');
@@ -22,6 +23,7 @@ const Send = () => {
     const [sequence, setSequence] = useState<Number>();
     const [accountNumber, setAccountNumber] = useState<Number>();
     const { user, getAccountDetails, sendToRecipient, getMessageSend } = useStore().userStore;
+    const navigation = useAppNavigation();
 
     const getAccountInformation = async () => {
         const data = await getAccountDetails(user);
@@ -60,7 +62,10 @@ const Send = () => {
                     amount: amount
                 }
             ]
-            await sendToRecipient(user, recipient, amount);
+            const res = await sendToRecipient(user, recipient, amount);
+            if (res) {
+                navigation.navigate('TransactionSuccess');
+            }
         } catch (err) {
             console.log('err here', err);
         }

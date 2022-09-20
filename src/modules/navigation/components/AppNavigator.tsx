@@ -8,6 +8,8 @@ import Vote from '../../vote/Vote';
 import Swap from '../../swap/Swap';
 import ValidatorDetails from '../../stake/components/ValidatorDetails';
 import StakeDetails from '../../stake/components/StakeDetails';
+import TransactionSuccess from '../../transaction/TransactionSuccess';
+import TransactionFailed from '../../transaction/TransactionFailed';
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -53,7 +55,16 @@ const AppNavigator = () => {
                     headerShown: false
                 }}
             />
-
+            <Stack.Screen name="TransactionSuccess" component={TransactionSuccess}
+                options={{
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen name="TransactionFailed" component={TransactionFailed}
+                options={{
+                    headerShown: false
+                }}
+            />
         </Stack.Navigator>
     )
 }

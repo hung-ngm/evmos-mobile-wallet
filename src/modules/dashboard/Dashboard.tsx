@@ -6,7 +6,8 @@ import {
     TouchableOpacity, 
     Image,
     SafeAreaView,
-    FlatList 
+    FlatList,
+    Button 
 } from 'react-native';
 import { mainTheme } from '../../themes/mainTheme';
 import { observer } from 'mobx-react-lite';
@@ -192,6 +193,10 @@ const Dashboard = () => {
                 </View>
               }
             </View>
+            <Button
+              title="Transaction Success"
+              onPress={() => navigation.navigate('TransactionSuccess')}
+            />
           </View>
         </View>
       );
