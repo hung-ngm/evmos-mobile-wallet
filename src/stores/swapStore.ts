@@ -22,7 +22,7 @@ import { TokenWithContract } from '../types/token';
 import { get, makeAutoObservable, reaction, runInAction } from 'mobx';
 import { getPrivKeyFromMnemonic } from '../utils/config';
 import { MNEMONIC } from '@env';
-import { useStore } from './store';
+import { store } from './store';
 import { TxType } from '../types/params';
 import "@ethersproject/shims";
 
@@ -157,7 +157,7 @@ class SwapStore {
                 + await sendTxn.hash, "to see your transaction")
                 runInAction(() => {
                     this.swapEvmoscan = "https://evm.evmos.org/tx/" + sendTxn.hash;
-                    useStore().userStore.setLastTx(TxType.SWAP);
+                    store.userStore.setLastTx(TxType.SWAP);
                 })
             } else {
                 console.log("Error submitting transaction")
