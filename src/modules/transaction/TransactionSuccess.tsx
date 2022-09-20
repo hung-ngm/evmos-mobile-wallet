@@ -36,7 +36,7 @@ const TransactionSuccess = () => {
             setExplorerText('View on Evmoscan');
             setExplorerUrl(swapEvmoscan);
         }
-    }, [explorerText, explorerUrl]);
+    }, [explorerText, explorerUrl, lastTx, sendMintscan, stakeMintscan, swapEvmoscan]);
     
 
     const OpenExternalURLButton = ({ url, children }) => {

@@ -1,36 +1,38 @@
-# TypeScript Example
+# Evmos Mobile Wallet
 
-<p>
-  <!-- iOS -->
-  <img alt="Supports Expo iOS" longdesc="Supports Expo iOS" src="https://img.shields.io/badge/iOS-4630EB.svg?style=flat-square&logo=APPLE&labelColor=999999&logoColor=fff" />
-  <!-- Android -->
-  <img alt="Supports Expo Android" longdesc="Supports Expo Android" src="https://img.shields.io/badge/Android-4630EB.svg?style=flat-square&logo=ANDROID&labelColor=A4C639&logoColor=fff" />
-  <!-- Web -->
-  <img alt="Supports Expo Web" longdesc="Supports Expo Web" src="https://img.shields.io/badge/web-4630EB.svg?style=flat-square&logo=GOOGLE-CHROME&labelColor=4285F4&logoColor=fff" />
-</p>
+## Inspiration
 
-```sh
-npx create-react-native-app -t with-typescript
-```
+Nowadays, most wallet UX only contains an asset page. This can provide simple UI for users, however it cannot take advantage of the whole ecosystem of a blockchain. Evmos Mobile Wallet, apart from basic DeFi features such as Sending, Staking, Receiving, will integrate the Swap token from EvmoSwap, and will also plan to integrate different elements of Evmos ecosystem in the future. We provide Evmos Mobile Wallet, an one-stop wallet that allows users only stay in 1 app to interact with all services of Evmos Ecosystem.
 
-TypeScript is a superset of JavaScript which gives you static types and powerful tooling in Visual Studio Code including autocompletion and useful inline warnings for type errors.
+## What it does
+DeFi services: 
+- Staking: Let users view all validators of Evmos, including their status (Active, Inactive, Jailed) and allow users to stake Evmos
+- Send/Receive tokens
+- Swapping: Integrate EvmosSwap DEX smart contracts and SDK to perform AMM on Evmos (currently supported ATOM, EVMOS, WEVMOS, EMO)
 
-## 🚀 How to use
+## How we built it
+- Technology:
++ Expo, React Native, Typescript
++ CosmJs, EvmosJs
++ EvmoSwap SDK
++ ethers.js
 
-#### Creating a new project
+## Challenges we ran into
+- The EvmosJS is still under development, so I need to figure out by reading also other cosmjs libraries to understand how to perform transaction on Evmos
+- Interact with GRPC, JSON-RPC and Cosmos REST
+- Understand EvmoSwap SDK by comparing with Uniswap V2 SDK (since EvmoSwap is a fork of Uniswap V2)
 
-- Install the CLI: `npm i -g expo-cli`
-- Create a project: `npx create-react-native-app -t with-typescript`
-- `cd` into the project
+## Accomplishments that we're proud of
+- Build a nice UI wallet on Evmos system
+- Understand how to use EvmosJs and CosmJs to interact with Evmos and Cosmos blockchain in general
 
-### Adding TypeScript to existing projects
+## What we learned
+- GRPC, JSON-RPC and Cosmos REST Evmos interaction
+- EvmoSwap SDK
 
-- Create a blank TypeScript config: `touch tsconfig.json`
-- Run `yarn start` or `npm run start` to automatically configure TypeScript
-- Rename files to TypeScript, `.tsx` for React components and `.ts` for plain typescript files
+## What's next for Evmos Mobile Wallet
+- Integrate Voting/Governance
+- Integrate other DEX into the wallet
+- Integrate NFT Marketplace into the wallet
+- Integrate some game play (GameFi, NFT game) that is developed on Evmos blockchain.
 
-> 💡 You can disable the TypeScript setup in Expo CLI with the environment variable `EXPO_NO_TYPESCRIPT_SETUP=1 expo start`
-
-## 📝 Notes
-
-- [Expo TypeScript guide](https://docs.expo.dev/versions/latest/guides/typescript/)
